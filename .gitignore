@@ -4,3 +4,7 @@ dist
 docs/qa
 video/audio_final.mp3
 video/recording.mp4
+prisma/*.js
+prisma/*.js.map
+prisma/*.d.ts
+*.tsbuildinfo
