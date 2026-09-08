@@ -96,7 +96,17 @@ npx prisma migrate deploy
 npm run seed
 ```
 
-Después verificá con `docker compose exec postgres psql -U postgres -d incidents_db -c "SELECT i.id, i.title, c.code FROM \"Incident\" i JOIN \"Category\" c ON c.id=i.\"categoryId\";"`. La evidencia real de la ejecución queda en `docs/evidencia_reconstruccion.txt` cuando se complete la prueba.
+La reconstrucción fue ejecutada y comprobada el 8 de septiembre de 2026. `prisma migrate deploy` aplicó las cuatro migraciones y el seed se ejecutó dos veces. Las dos incidencias históricas quedaron con `GENERAL`; quedaron exactamente dos categorías del seed (`GENERAL` y `SOFTWARE`) y una incidencia del seed. La evidencia completa, incluidos los resultados HTTP y de las restricciones de PostgreSQL, está en [docs/evidencia_pruebas.md](docs/evidencia_pruebas.md).
+
+## Pruebas ejecutadas
+
+- Swagger/OpenAPI (`GET /api-json`): `200`.
+- Solicitud correcta (`POST /incidents`): `201`.
+- Validaciones DTO: `400` al omitir `title` y al enviar un campo no permitido.
+- Recursos inexistentes: `404` para una incidencia y una categoría inexistentes.
+- Unicidad: el segundo `POST /categories` con el mismo `code` devolvió `409`.
+- Clave foránea: PostgreSQL rechazó una inserción directa con `categoryId = 999999`; no se insertó ninguna fila inválida.
+- Idempotencia: dos ejecuciones consecutivas del seed no duplicaron categorías ni la incidencia de ejemplo.
 
 ## migrate dev y migrate deploy
 
