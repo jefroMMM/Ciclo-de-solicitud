@@ -1,6 +1,6 @@
 # Evidencia de pruebas reales
 
-Fecha de ejecución: 8 de septiembre de 2026.
+Fecha de ejecución: 8 y 9 de septiembre de 2026.
 
 ## Entorno y migraciones
 
@@ -43,3 +43,9 @@ Se intentó insertar directamente en PostgreSQL una fila de `Incident` con `cate
 ## Reconstrucción final
 
 La base quedó reconstruida desde cero, con todas las migraciones aplicadas y el seed idempotente ejecutado dos veces. No se usó `prisma db push` ni se modificó ninguna migración existente.
+
+## Repetición de la prueba el 9 de septiembre
+
+Se repitió `docker compose down -v`, `docker compose up -d`, `npx prisma migrate deploy` y `npm run seed` dos veces. Prisma informó que las cuatro migraciones fueron aplicadas correctamente.
+
+La consulta final devolvió las dos incidencias históricas con `GENERAL` y la incidencia del seed con `SOFTWARE`. PostgreSQL confirmó `Incident_categoryId_fkey` y el índice `Category_code_key` como UNIQUE. En HTTP se verificaron: creación de categoría (`201`), creación de incidencia (`201`), DTO incompleto (`400`), incidencia inexistente (`404`) y categoría repetida `VIDEO` (`409`).
