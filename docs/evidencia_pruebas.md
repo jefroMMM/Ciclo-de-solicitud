@@ -1,3 +1,8 @@
+ocker compose down -v
+docker compose up -d
+npx prisma migrate deploy
+npm run seed
+npm run seed
 # Evidencia de pruebas reales
 
 Fecha de ejecución: 8 y 9 de septiembre de 2026.

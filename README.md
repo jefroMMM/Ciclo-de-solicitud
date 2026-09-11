@@ -7,7 +7,7 @@ API REST para registrar y consultar incidencias, organizadas por categorías. In
 TypeScript, NestJS, PostgreSQL 16, Prisma, Docker Compose, Swagger y class-validator.
 
 ## Arquitectura y recorrido
-
+r
 La aplicación separa HTTP, reglas de negocio y persistencia:
 
 ```text
